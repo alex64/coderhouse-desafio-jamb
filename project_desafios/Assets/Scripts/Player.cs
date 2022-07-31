@@ -14,36 +14,47 @@ public class Player : MonoBehaviour
     public float healing = 1f;
 
     public Vector3 direction = Vector3.forward;
+
+    public float speed = 2f;
+
+    private Dictionary<KeyCode, Vector3> movementList = new Dictionary<KeyCode, Vector3>();
     
     // Start is called before the first frame update
     void Start()
     {
-        //transform.localScale *= scale;
+        movementList.Add(KeyCode.W, Vector3.forward);
+        movementList.Add(KeyCode.S, Vector3.back);
+        movementList.Add(KeyCode.A, Vector3.left);
+        movementList.Add(KeyCode.D, Vector3.right);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Damage(damageInfliceted);
-        Recovery(healing);
-        Movement(direction);
-        Debug.Log("Life: " + life);
+        //Damage(damageInfliceted);
+        //Recovery(healing);
+        //Movement(direction);
+        foreach(KeyValuePair<KeyCode, Vector3> movement in movementList) 
+        {
+            if(Input.GetKey(movement.Key)) 
+            {
+                Movement(movement.Value);
+            }
+        }
     }
 
     private void Movement(Vector3 direction)
     {
-        transform.position += direction * velocity * Time.deltaTime;
+        transform.Translate(direction * speed * Time.deltaTime);
     }
 
     private void Damage(float damageInfliceted)
     {
         life -= damageInfliceted;
-        Debug.Log("Damage Inflicted: " + damageInfliceted);
     }
 
     private void Recovery(float healing)
     {
         life += healing;
-        Debug.Log("Healing " + healing);
     }
 }

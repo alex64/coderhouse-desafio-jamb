@@ -9,6 +9,7 @@ public class BulletGenerator : MonoBehaviour
     public float delayShoot = 1f;
 
     public float repeatShoot = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +27,6 @@ public class BulletGenerator : MonoBehaviour
     }
 
     private void CreateBullet() {
-        Instantiate(bullet, transform);
+        Instantiate(bullet, transform.position, transform.rotation);        
     }
 }
