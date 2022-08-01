@@ -5,28 +5,29 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     public GameObject[] cameras;
-    private Dictionary<KeyCode, GameObject> cameraList = new Dictionary<KeyCode, GameObject>();
+    private int activeCamera = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        cameraList.Add(KeyCode.F1, cameras[0]);
-        cameraList.Add(KeyCode.F2, cameras[1]);
+        
     }
 
     // Update is called once per frame
-    void Update() //Frame
+    void Update()
     {
-        foreach(KeyValuePair<KeyCode, GameObject> camera in cameraList) 
-        {     
-            if(Input.GetKeyDown(camera.Key)) 
+        if(Input.GetKeyDown(KeyCode.F1)) 
+        {
+            activeCamera = activeCamera<(cameras.Length - 1)?activeCamera + 1:0;
+            for(int i=0; i < cameras.Length; i++) 
             {
-                camera.Value.SetActive(true);
-                foreach(KeyValuePair<KeyCode, GameObject> disableCamera in cameraList)
+                if(activeCamera == i)
                 {
-                    if(disableCamera.Value != camera.Value) 
-                    {
-                        disableCamera.Value.SetActive(false);
-                    }
+                    cameras[i].SetActive(true);
+                }
+                else
+                {
+                    cameras[i].SetActive(false);
                 }
             }
         }
