@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerAllMovements : MonoBehaviour
 {
-    //public float scale = 2f;
-    public float velocity = 2f;
+    [SerializeField]
+    private float velocity = 2f;
 
-    public float life = 3f;
+    [SerializeField]
+    private Vector3 direction = Vector3.forward;
 
-    public float damageInfliceted = 0.5f;
+    [SerializeField]
+    private float speed = 2f;
 
-    public float healing = 1f;
-
-    public Vector3 direction = Vector3.forward;
-
-    public float speed = 2f;
+    [SerializeField]
+    private float cameraAxisX = 0f;
 
     private Dictionary<KeyCode, Vector3> movementList = new Dictionary<KeyCode, Vector3>();
     
@@ -31,9 +30,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Damage(damageInfliceted);
-        //Recovery(healing);
-        //Movement(direction);
+        RotatePlayer();
         foreach(KeyValuePair<KeyCode, Vector3> movement in movementList) 
         {
             if(Input.GetKey(movement.Key)) 
@@ -48,13 +45,10 @@ public class Player : MonoBehaviour
         transform.Translate(direction * speed * Time.deltaTime);
     }
 
-    private void Damage(float damageInfliceted)
+    public void RotatePlayer()
     {
-        life -= damageInfliceted;
-    }
-
-    private void Recovery(float healing)
-    {
-        life += healing;
+        cameraAxisX += Input.GetAxis("Mouse X");
+        Quaternion newRotation = Quaternion.Euler(0, cameraAxisX, 0);
+        transform.rotation= Quaternion.Lerp(transform.rotation, newRotation, 2f * Time.deltaTime);
     }
 }
