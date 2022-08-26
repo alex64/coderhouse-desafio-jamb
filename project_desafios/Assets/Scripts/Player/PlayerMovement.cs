@@ -26,6 +26,13 @@ public class PlayerMovement : MonoBehaviour
     private float cameraAxisX = 0f;
 
     private Dictionary<KeyCode, Vector3> movementList = new Dictionary<KeyCode, Vector3>();
+
+    //Raycast
+    [SerializeField] private Transform raycastPoint;
+
+    [SerializeField]
+    private float rayDistance = 10f;
+    //Raycast
     
     // Start is called before the first frame update
     void Start()
@@ -52,9 +59,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Update is called once per frame
+    private void FixedUpdate()
+    {
+        PlayerRaycast();
+    }
+
     private void Movement(Vector3 direction)
     {
-        transform.Translate(direction * speed * Time.deltaTime);
+        if(!GameManager.HitWall) 
+        {
+            transform.Translate(direction * speed * Time.deltaTime);
+        }
+        
     }
 
     public void RotatePlayer()
@@ -62,6 +79,34 @@ public class PlayerMovement : MonoBehaviour
         cameraAxisX += Input.GetAxis("Mouse X");
         Quaternion newRotation = Quaternion.Euler(0, cameraAxisX, 0);
         transform.rotation= Quaternion.Lerp(transform.rotation, newRotation, 2f * Time.deltaTime);
+    }
+
+    private void PlayerRaycast()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(raycastPoint.position, raycastPoint.TransformDirection(Vector3.forward), out hit, rayDistance))
+        {
+            if (hit.transform.CompareTag("Wall"))
+            {
+                GameManager.HitWall = true;
+                if(GameManager.HitWall)
+                {
+                    Debug.Log("Hit Wall: " + GameManager.HitWall);
+                }
+            }
+        }
+        else 
+        {
+            GameManager.HitWall = false;
+        }
+        
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Vector3 direction = raycastPoint.TransformDirection(Vector3.forward) * rayDistance;
+        Gizmos.DrawRay(raycastPoint.position, direction);
     }
 
     // private void Damage(float damageInfliceted)
