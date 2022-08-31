@@ -27,9 +27,12 @@ public class EnemyMovement : MonoBehaviour
 
     [SerializeField]
     private float rayDistance = 10f;
+
+    public Transform PlayerTransform { get => playerTransform; set => playerTransform = value; }
+
     //Raycast
 
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -62,7 +65,7 @@ public class EnemyMovement : MonoBehaviour
         if(!GameManager.HitCar) 
         {
             LookPlayer();
-            Vector3 chaseDirection = playerTransform.position - transform.position;
+            Vector3 chaseDirection = PlayerTransform.position - transform.position;
             if(chaseDirection.magnitude > enemySeparation)
             { 
                 transform.position += chaseDirection.normalized * speed * Time.deltaTime; 
@@ -73,7 +76,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void LookPlayer()
     {
-        Quaternion newRotation = Quaternion.LookRotation(playerTransform.position - transform.position);
+        Quaternion newRotation = Quaternion.LookRotation(PlayerTransform.position - transform.position);
         transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, 2f * Time.deltaTime);
     }
 
@@ -88,6 +91,8 @@ public class EnemyMovement : MonoBehaviour
                 if(GameManager.HitCar) 
                 {
                     Debug.Log("Hit Car: " + GameManager.HitCar);
+                    //Delete object
+                    Destroy(gameObject);
                 }
             }
         }

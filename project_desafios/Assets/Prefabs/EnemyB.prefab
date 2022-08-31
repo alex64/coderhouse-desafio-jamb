@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  enemyType: 0
+  enemyType: 1
   playerTransform: {fileID: 0}
   enemySeparation: 2
   raycastPoint: {fileID: 9060125755366193495}
