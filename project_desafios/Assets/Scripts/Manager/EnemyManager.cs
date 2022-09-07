@@ -24,5 +24,7 @@ public class EnemyManager : MonoBehaviour
 
         GameObject enemy = Instantiate(enemyList[random], new Vector3(playerTransform.position.x, 0f, playerTransform.position.z * -1), playerTransform.rotation);
         enemy.GetComponent<EnemyMovement>().PlayerTransform = playerTransform;
+
+        HUDManager.instance.SetLastEnemyText(enemy.gameObject.tag);
     }
 }

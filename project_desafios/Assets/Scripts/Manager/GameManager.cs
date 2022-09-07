@@ -9,6 +9,15 @@ public class GameManager : MonoBehaviour
 
     private static bool hitWall;
     public static bool HitWall { get => hitWall; set => hitWall = value; }
+    
+    private static int score = 100;
+    public static int Score { 
+        get => score; 
+        set {
+            score = value;
+            HUDManager.instance.SetScoreText();
+        }
+    }
 
     public static GameManager instance;
 

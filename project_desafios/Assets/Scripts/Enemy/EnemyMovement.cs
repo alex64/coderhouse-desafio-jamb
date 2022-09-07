@@ -91,6 +91,7 @@ public class EnemyMovement : MonoBehaviour
                 if(GameManager.HitCar) 
                 {
                     Debug.Log("Hit Car: " + GameManager.HitCar);
+                    GameManager.Score--;
                     //Delete object
                     Destroy(gameObject);
                 }
