@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
         get => score; 
         set {
             score = value;
-            HUDManager.instance.SetScoreText();
+            //HUDManager.instance.SetScoreText();
         }
     }
 

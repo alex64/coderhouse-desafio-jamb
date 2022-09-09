@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 891845259518872213}
-  - component: {fileID: 4649973620824547573}
+  - component: {fileID: 2762995785413339303}
   m_Layer: 0
   m_Name: EnemyA
   m_TagString: Firetruck
@@ -97,7 +97,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4649973620824547573
+--- !u!114 &2762995785413339303
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,15 +106,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8859888019950671635}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1db1c00990a5a24993b6f6692eef518, type: 3}
+  m_Script: {fileID: 11500000, guid: 26dd628e91518904d85c12b4a13158ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
-  enemyType: 1
   playerTransform: {fileID: 0}
-  enemySeparation: 2
   raycastPoint: {fileID: 3082941259653381171}
-  rayDistance: 10
+  enemyData: {fileID: 11400000, guid: 31730baa545825346a173679d29c5c77, type: 2}
+  enemyChaserData: {fileID: 11400000, guid: 319ea9b7a14f8224eaa3bb9ccbdf1518, type: 2}
 --- !u!1001 &8985636558478295374
 PrefabInstance:
   m_ObjectHideFlags: 0

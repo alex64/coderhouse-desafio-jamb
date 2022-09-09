@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerAllMovements : MonoBehaviour
 {
-    [SerializeField]
-    private float velocity = 2f;
 
     [SerializeField]
     private Vector3 direction = Vector3.forward;

@@ -23,8 +23,7 @@ public class EnemyManager : MonoBehaviour
         Debug.Log("random:" + random);
 
         GameObject enemy = Instantiate(enemyList[random], new Vector3(playerTransform.position.x, 0f, playerTransform.position.z * -1), playerTransform.rotation);
-        enemy.GetComponent<EnemyMovement>().PlayerTransform = playerTransform;
-
-        HUDManager.instance.SetLastEnemyText(enemy.gameObject.tag);
+        enemy.GetComponent<Enemy>().PlayerTransform = playerTransform;
+        //HUDManager.instance.SetLastEnemyText(enemy.gameObject.tag);
     }
 }

@@ -110,12 +110,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9f43e37bc57ea4682b8e0a1b9b6eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 2
   direction: {x: 0, y: 0, z: 1}
-  speed: 2
   cameraAxisX: 0
   raycastPoint: {fileID: 8420095530387791553}
-  rayDistance: 10
+  playerData: {fileID: 11400000, guid: 97480e910be70664cb7ad173616eed04, type: 2}
 --- !u!65 &5963255901457717405
 BoxCollider:
   m_ObjectHideFlags: 0

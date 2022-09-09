@@ -19,9 +19,6 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField]
     private float enemySeparation = 2f;
 
-    private float playerXAxis = 0f;
-    private float playerZAxis = 0f;
-
     //Raycast
     [SerializeField] private Transform raycastPoint;
 

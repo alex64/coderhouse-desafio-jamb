@@ -4,23 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    private float velocity = 2f;
-
-    // [SerializeField]
-    // private float life = 3f;
-
-    // [SerializeField]
-    // private float damageInfliceted = 0.5f;
-
-    // [SerializeField]
-    // private float healing = 1f;
 
     [SerializeField]
     private Vector3 direction = Vector3.forward;
-
-    [SerializeField]
-    private float speed = 2f;
 
     [SerializeField]
     private float cameraAxisX = 0f;
@@ -29,10 +15,10 @@ public class PlayerMovement : MonoBehaviour
 
     //Raycast
     [SerializeField] private Transform raycastPoint;
+    //Raycast
 
     [SerializeField]
-    private float rayDistance = 10f;
-    //Raycast
+    private PlayerData playerData;
     
     // Start is called before the first frame update
     void Start()
@@ -69,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(!GameManager.HitWall) 
         {
-            transform.Translate(direction * speed * Time.deltaTime);
+            transform.Translate(direction * playerData.Speed * Time.deltaTime);
         }
         
     }
@@ -84,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
     private void PlayerRaycast()
     {
         RaycastHit hit;
-        if (Physics.Raycast(raycastPoint.position, raycastPoint.TransformDirection(Vector3.forward), out hit, rayDistance))
+        if (Physics.Raycast(raycastPoint.position, raycastPoint.TransformDirection(Vector3.forward), out hit, playerData.RayDistance))
         {
             if (hit.transform.CompareTag("Wall"))
             {
@@ -105,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Vector3 direction = raycastPoint.TransformDirection(Vector3.forward) * rayDistance;
+        Vector3 direction = raycastPoint.TransformDirection(Vector3.forward) * playerData.RayDistance;
         Gizmos.DrawRay(raycastPoint.position, direction);
     }
 
