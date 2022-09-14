@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Enemy : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class Enemy : MonoBehaviour
     //private float rayDistance = 10f;
 
     public Transform PlayerTransform { get => playerTransform; set => playerTransform = value; }
+
+    public static event Action onEnemyDestroyed;
 
     // Update is called once per frame
     private void FixedUpdate()
@@ -38,7 +41,9 @@ public class Enemy : MonoBehaviour
                 GameManager.HitCar = true;
                 if(GameManager.HitCar) 
                 {
-                    Debug.Log("Hit Car: " + GameManager.HitCar);
+                    //Debug.Log("Hit Car: " + GameManager.HitCar);
+                    Debug.Log("onEnemyDestroyed-Called-Enemy");
+                    onEnemyDestroyed?.Invoke();
                     GameManager.Score--;
                     //Delete object
                     Destroy(gameObject);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class EnemyMovement : MonoBehaviour
 
     [SerializeField]
     [Range(1f, 10f)]  
-    private float speed = 2f;
+    private float speed = 0.5f;
 
     [SerializeField]
     private EnemyType enemyType = EnemyType.Peeper;
@@ -26,6 +27,11 @@ public class EnemyMovement : MonoBehaviour
     private float rayDistance = 10f;
 
     public Transform PlayerTransform { get => playerTransform; set => playerTransform = value; }
+    public float Velocity { get => velocity; set => velocity = value; }
+
+    private float velocity = 0.5f;
+
+    public static event Action onEnemyDestroyed;
 
     //Raycast
 
@@ -65,7 +71,7 @@ public class EnemyMovement : MonoBehaviour
             Vector3 chaseDirection = PlayerTransform.position - transform.position;
             if(chaseDirection.magnitude > enemySeparation)
             { 
-                transform.position += chaseDirection.normalized * speed * Time.deltaTime; 
+                transform.position += chaseDirection.normalized * Velocity * Time.deltaTime; 
             }
         }
         
@@ -87,7 +93,9 @@ public class EnemyMovement : MonoBehaviour
                 GameManager.HitCar = true;
                 if(GameManager.HitCar) 
                 {
-                    Debug.Log("Hit Car: " + GameManager.HitCar);
+                    //Debug.Log("Hit Car: " + GameManager.HitCar);
+                    Debug.Log("onEnemyDestroyed-Called-EnemyMovement");
+                    onEnemyDestroyed?.Invoke();
                     GameManager.Score--;
                     //Delete object
                     Destroy(gameObject);

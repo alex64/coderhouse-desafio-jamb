@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private float cameraAxisX = 0f;
 
     private Dictionary<KeyCode, Vector3> movementList = new Dictionary<KeyCode, Vector3>();
+    
 
     //Raycast
     [SerializeField] private Transform raycastPoint;
@@ -19,7 +22,14 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private PlayerData playerData;
+
+    private float extraSpeed = 0f;
     
+    public static event Action onMoveBackwards;
+
+    [SerializeField] private UnityEvent OnBulletFocus;
+    [SerializeField] private UnityEvent OnBulletUnfocus;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +50,11 @@ public class PlayerMovement : MonoBehaviour
         {
             if(Input.GetKey(movement.Key)) 
             {
+                if(Input.GetKey(KeyCode.S)) 
+                {
+                    Debug.Log("onMoveBackwards-Called-PlayerMovement");
+                    onMoveBackwards?.Invoke();
+                }
                 Movement(movement.Value);
             }
         }
@@ -53,10 +68,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement(Vector3 direction)
     {
-        if(!GameManager.HitWall) 
-        {
-            transform.Translate(direction * playerData.Speed * Time.deltaTime);
-        }
+        //if(!GameManager.HitWall) 
+        //{
+            transform.Translate(direction * (playerData.Speed + extraSpeed) * Time.deltaTime);
+        //}
         
     }
 
@@ -72,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(raycastPoint.position, raycastPoint.TransformDirection(Vector3.forward), out hit, playerData.RayDistance))
         {
+            Debug.Log("---TEST");
             if (hit.transform.CompareTag("Wall"))
             {
                 GameManager.HitWall = true;
@@ -80,10 +96,17 @@ public class PlayerMovement : MonoBehaviour
                     Debug.Log("Hit Wall: " + GameManager.HitWall);
                 }
             }
+            if (hit.transform.CompareTag("Bullet"))
+            {
+                Debug.Log("OnBulletFocus-Called-PlayerMovement");
+                OnBulletFocus?.Invoke();
+            }
         }
         else 
         {
             GameManager.HitWall = false;
+            Debug.Log("OnBulletUnfocus-Called-PlayerMovement");
+            OnBulletUnfocus?.Invoke();
         }
         
     }
@@ -93,6 +116,17 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.color = Color.blue;
         Vector3 direction = raycastPoint.TransformDirection(Vector3.forward) * playerData.RayDistance;
         Gizmos.DrawRay(raycastPoint.position, direction);
+    }
+
+    public void SetPlayerPosition()
+    {
+        Debug.Log("OnTriggerOutOfBounds-Received-PlayerMovement");
+        transform.position = new Vector3(0, 0, 0);
+    }
+
+    public void IncreaseSpeed(int speed) {
+        Debug.Log("OnTriggerSpeedUp-Received-PlayerMovement");
+        extraSpeed = speed;
     }
 
     // private void Damage(float damageInfliceted)
