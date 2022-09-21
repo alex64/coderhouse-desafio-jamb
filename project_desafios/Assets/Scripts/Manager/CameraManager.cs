@@ -17,7 +17,7 @@ public class CameraManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if(Input.GetKeyDown(KeyCode.F1)) 
+        if(Input.GetKeyDown(KeyCode.F1)) 
         {
             activeCamera = activeCamera<(cameras.Length - 1)?activeCamera + 1:0;
             for(int i=0; i < cameras.Length; i++) 
@@ -31,10 +31,10 @@ public class CameraManager : MonoBehaviour
                     cameras[i].SetActive(false);
                 }
             }
-        }*/
+        }
     }
 
-    public void ChangeTopCamera() 
+    /*public void ChangeTopCamera() 
     {
         Debug.Log("OnBulletFocus-Received-CameraManager");
         mainCameraActive = false;
@@ -47,5 +47,5 @@ public class CameraManager : MonoBehaviour
         mainCameraActive = true;
         cameras[0].SetActive(mainCameraActive);cameras[1].SetActive(!mainCameraActive);
         
-    }
+    }*/
 }

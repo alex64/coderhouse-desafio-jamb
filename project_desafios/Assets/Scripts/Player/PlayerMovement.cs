@@ -87,7 +87,6 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(raycastPoint.position, raycastPoint.TransformDirection(Vector3.forward), out hit, playerData.RayDistance))
         {
-            Debug.Log("---TEST");
             if (hit.transform.CompareTag("Wall"))
             {
                 GameManager.HitWall = true;
